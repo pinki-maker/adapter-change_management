@@ -60,14 +60,14 @@ function get(serviceNowTable, callback) {
   // Some properties are read from global const options.
   // Some properties are passed into function get() through parameters.
   const requestOptions = {
-    method: 'GET',
+    method: 'POST',
     auth: {
       user: options.username,
       pass: options.password,
     },
     baseUrl: options.url,
     uri: `/api/now/table/${serviceNowTable}`,
-  };
+  };S
 
   // Send Request to ServiceNow.
   // We are passing variable requestOptions for the first argument.
