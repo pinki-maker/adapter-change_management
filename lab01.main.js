@@ -1,3 +1,5 @@
+
+
 // Update this constant with your ServiceNow credentials
 const options = {
   url: 'yourDevServiceNowInstanceCanonicalHostname',
@@ -113,8 +115,3 @@ function main() {
 
 // Call main to run it.
 main();
-
-
-
-
-
