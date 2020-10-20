@@ -58,15 +58,15 @@ function get(serviceNowTable, callback) {
   // that holds the HTTP request method, credentials, and the API's URL.
   // Some properties are hardcoded, like the method and part of the URI.
   // Some properties are read from global const options.
-  // Some properties are passed into function get() through parameters.
+  // Some properties are passed into function post() through parameters.
   const requestOptions = {
-    method: 'GET',
+    method: 'POST',
     auth: {
       user: options.username,
       pass: options.password,
     },
     baseUrl: options.url,
-    uri: `/api/now/table/${serviceNowTable}?sysparm_limit=1`,
+    uri: `/api/now/table/${serviceNowTable}`,
   };
 
   // Send Request to ServiceNow.
@@ -99,17 +99,15 @@ function get(serviceNowTable, callback) {
 
 // This test function calls your request and logs any errors.
 function main() {
+  // Call the ServiceNow POST API
+  // We are passing a static argument for parameter serviceNowTable.
+  // We are passing an anonymous function argument, a data-first callback,
+  // for parameter callback.
   get('change_request', (data, error) => {
     if (error) {
       console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
     console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
-  });
-  post('change_request', (data, error) => {
-    if (error) {
-      console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
-    }
-    console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
   });
 }
 
