@@ -1,3 +1,25 @@
+
+// Update this constant with your ServiceNow credentials
+const options = {
+  url: 'https://developer.servicenow.com/app.do#!/instance',
+  username: 'pinkywork17@gmail.com',
+  password: 'Gurumaa123@'
+};
+
+
+
+
+
+/**
+ * Import the Node.js request package.
+ * See https://www.npmjs.com/package/request
+ */
+const request = require('request');
+
+
+// We'll use this regular expression to verify REST API's HTTP response status code.
+const validResponseRegex = /(2\d\d)/;
+
 /**
  * @callback iapCallback
  * @description A [callback function]{@link
@@ -71,6 +93,20 @@ function processRequestResults(error, response, body, callback) {
    * This function must not check for a hibernating instance;
    * it must call function isHibernating.
    */
+   const res = {
+       data: null,
+       error: null
+   };
+   if (error) {
+       res.error = error;
+   }
+   if (response && isHibernating(response)) {
+       res.error = "Instance is Hibernating";
+   } else {
+       res.data = response;
+   }
+   
+   return callback(res.data, res.error);
 }
 
 
@@ -102,7 +138,15 @@ function sendRequest(callOptions, callback) {
    * from the previous lab. There should be no
    * hardcoded values.
    */
-  const requestOptions = {};
+  const requestOptions = {
+      method: callOptions.method,
+      auth: {
+        user: options.username,
+        pass: options.password,
+      },
+      baseUrl: options.url,
+      uri: uri,
+  };
   request(requestOptions, (error, response, body) => {
     processRequestResults(error, response, body, (processedResults, processedError) => callback(processedResults, processedError));
   });
